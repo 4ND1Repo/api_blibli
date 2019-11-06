@@ -1,0 +1,17 @@
+{
+    "name": "kedaisayur/blibli",
+    "description": "Api for BliBli.com",
+    "type": "library",
+    "require": {
+        "php": ">=5.6"
+    },
+    "autoload": {
+        "psr-4": { "Blibli\\": "src/" }
+    },
+    "authors": [
+        {
+            "name": "Andi Fauzi Akbar",
+            "email": "faujiakbar@gmail.com"
+        }
+    ]
+}
