@@ -3,7 +3,8 @@
     "description": "Api for BliBli.com",
     "type": "library",
     "require": {
-        "php": "^5.3"
+        "php": ">=5.3",
+        "vlucas/phpdotenv": ">=3.6"
     },
     "autoload": {
         "psr-4": { "Blibli\\": "src/" }
