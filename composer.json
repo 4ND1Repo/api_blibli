@@ -1,8 +1,8 @@
 {
     "name": "kedaisayur/blibli",
     "description": "Api for BliBli.com",
-    "type": "library",
     "license": "MIT",
+    "type": "library",
     "require": {
         "php": ">=5.3",
         "vlucas/phpdotenv": ">=3.6"

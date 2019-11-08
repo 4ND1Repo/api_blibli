@@ -5,6 +5,7 @@ namespace Blibli;
 use Exception;
 use Blibli\Config;
 use Blibli\Helpers\Rest;
+use Illuminate\Support\Facades\Storage;
 
 class Auths extends Config {
 
@@ -13,30 +14,59 @@ class Auths extends Config {
     public static $password;
     public static $uri;
     public static $token;
+    public static $uuid;
+    public static $milisecond;
+    public static $file_token = 'token.json';
 
     public function __construct($c=null,$u=null,$p=null) {
+        date_default_timezone_set("Asia/Jakarta");
         self::$channelId = !is_null($c)?$c:null;
         self::$username = !is_null($u)?$u:null;
         self::$password = !is_null($p)?$p:null;
         self::$uri = parent::domain();
+        self::$milisecond = round(microtime(true) * 1000);
+        self::$uuid = self::uuid();
 
         // validate config from ENV
         self::_validateEnv(parent::account());
 
-        if(!self::$channelId && !self::$username && !self::$password) {throw new Exception('Please input BLIBLI_CHANNELID, BLIBLI_USERNAME AND BLIBLI_PASSWORD in your ENV file'); return;}
+        if(!self::$channelId && !self::$username && !self::$password) {throw new Exception('Please input BLIBLI_SECRETKEY, BLIBLI_CLIENTID_USERNAME, BLIBLI_CLIENTID_PASSWORD, BLIBLI_MERCHANTID, BLIBLI_CHANNELID, BLIBLI_USERNAME AND BLIBLI_PASSWORD in your ENV file'); return;}
+        else
+            self::getToken();
     }
 
-    public function getToken() {
-        var_dump(parent::uriToken()."?channelId=".self::$channelId);
-        $res = Rest::post(parent::uriToken()."?channelId=".self::$channelId, [
-            'username' => self::$username,
-            'password' => self::$password,
-            'grant_type' => 'password'
-        ],'Basic eW91ci1hcGktdXNlcm5hbWU6eW91ci1hcGktcGFzc3dvcmQ=');
+    public static function getToken() {
+        if(!Storage::exists(self::$file_token)){
+            $res = Rest::post(parent::URItoken().'?channelId='.self::$channelId, [
+                'grant_type' => 'password',
+                'username' => self::$username,
+                'password' => self::$password
+            ],null,['username'=>parent::$clientID,'password'=>parent::$clientPass]);
 
-        var_dump($res);
+            self::$token = $res['status'] == 200?$res['data']:null;
+            // saving token
+            Storage::put(self::$file_token,json_encode(self::$token));
+        } else
+            self::$token = json_decode(Storage::get(self::$file_token));
+    }
 
-        return $this;
+    public static function refreshToken(){
+        $res = Rest::post(parent::URItoken().'?channelId='.self::$channelId, [
+            'grant_type' => 'password',
+            'client_id' => self::$clientID,
+            'refresh_token' => self::$token->refresh_token
+        ],null,['username'=>parent::$clientID,'password'=>parent::$clientPass]);
+
+        if($res['status'] == 200){
+            self::$token = $res['data'];
+            Storage::delete(self::$file_token);
+            Storage::put(self::$file_token,json_encode(self::$token));
+        } else if($res['status'] == 400) {
+            if($res['data']->error == 'invalid_grant'){
+                Storage::delete(self::$file_token);
+                self::getToken();
+            }
+        }
     }
 
     // refer to getUser
@@ -61,5 +91,32 @@ class Auths extends Config {
         } catch(Exception $e){
             return;
         }
+    }
+
+    public static function signature($milliseconds, $reqSecret, $reqMethod, $reqBody, $reqContentType, $reqUrl){
+        $milliseconds = $milliseconds / 1000;
+
+        $patternDate = date("D M d H:i:s T Y", $milliseconds);
+
+        $reqBody = str_replace("\r", "\\r", $reqBody);
+        $reqBody = str_replace("\n", "\\n", $reqBody);
+        $reqBody = $reqBody != "" ? md5($reqBody) : "";
+
+        $apiKey = $reqMethod . "\n" . trim($reqBody) . "\n" . trim($reqContentType) . "\n" . $patternDate . "\n" .$reqUrl;
+
+        $signature = hash_hmac('sha256', $apiKey, $reqSecret, true);
+        $encodedSignature = base64_encode($signature);
+
+        return $encodedSignature;
+    }
+
+    public static function uuid() {
+        return sprintf( '%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
+            mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ),
+            mt_rand( 0, 0xffff ),
+            mt_rand( 0, 0x0fff ) | 0x4000,
+            mt_rand( 0, 0x3fff ) | 0x8000,
+            mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff )
+        );
     }
 }
