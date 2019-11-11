@@ -64,7 +64,7 @@ public function order(Request $r){
 - [ ] Order Operation
 - [x] Product Collection
 - [ ] Product Operation
-- [ ] Product Discustion
+- [ ] Product Discussion
 - [ ] SAS
 - [ ] Queue
 - [ ] Obsolete API
