@@ -1,5 +1,7 @@
-###API for connect to blibli.com
-Donate me please [PAYPAL](https://www.paypal.me/andifauji)
+##API for connect to blibli.com
+
+Donate me please...
+[Paypal](https://www.paypal.me/andifauji)
 
 Requirement :
 * Laravel/Lumen/Symfony
@@ -60,9 +62,33 @@ public function order(Request $r){
 - [x] Authentication
 - [x] Order Collection
 - [ ] Order Operation
-- [ ] Product Collection
+- [x] Product Collection
 - [ ] Product Operation
 - [ ] Product Discustion
 - [ ] SAS
 - [ ] Queue
 - [ ] Obsolete API
+
+
+---
+####Cheatsheet
+
+|   Type   | Name | Namespace | Class |
+| -------- | -------- | ---- | ---|
+|  Order Collection | Order List  | \Blibli\Orders | orderList() |
+|  Order Collection | Order Detail | \Blibli\Orders | orderDetail() |
+|  Order Collection | Download shipping label | \Blibli\Orders | orderDownloadShipping() |
+|  Order Collection | Airway Bill Information  | \Blibli\Orders | orderAirwayBill() |
+|  Order Collection | Combine Shipping List  | \Blibli\Orders | orderCombineShippingList() |
+|  Order Collection | Returned Order List  | \Blibli\Orders | orderReturnList() |
+|  Order Collection | Returned Order Detail  | \Blibli\Orders | orderReturnDetail() |
+| Product Collection | Product List V2 | \Blibli\Products | productListV2() |
+| Product Collection | Product Detail | \Blibli\Products | productDetail() |
+| Product Collection | Category Tree | \Blibli\Products | productCategoryTree() |
+| Product Collection | Category Attribute List | \Blibli\Products | productCategoryAttribute() |
+| Product Collection | Brand List | \Blibli\Products | productBrand() |
+| Product Collection | Pickup Point List | \Blibli\Products | productPickupPoint() |
+| Product Collection | Product In Process | \Blibli\Products | productInProcess() |
+| Product Collection | Rejected Product List | \Blibli\Products | productRejectList() |
+| Product Collection | Rejected Product List by merchantSku | \Blibli\Products | productRejectListByMerchant() |
+| Product Collection | Product History | \Blibli\Products | productHistory() |
