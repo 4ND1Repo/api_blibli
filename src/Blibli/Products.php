@@ -41,6 +41,10 @@ class Products extends Auths {
 
         if($res['status'] == 200)
             return $res['data'];
+        else if($res['status'] == 401){
+            self::refreshToken();
+            return self::productList();
+        }
 
         return;
     }
@@ -83,6 +87,10 @@ class Products extends Auths {
 
         if($res['status'] == 200)
             return $res['data'];
+        else if($res['status'] == 401){
+            self::refreshToken();
+            return self::productListV2();
+        }
 
         return;
     }
@@ -112,6 +120,10 @@ class Products extends Auths {
 
         if($res['status'] == 200)
             return $res['data'];
+        else if($res['status'] == 401){
+            self::refreshToken();
+            return self::productDetail();
+        }
 
         return;
     }
@@ -140,6 +152,10 @@ class Products extends Auths {
 
         if($res['status'] == 200)
             return $res['data'];
+        else if($res['status'] == 401){
+            self::refreshToken();
+            return self::productCategoryTree();
+        }
 
         return;
     }
@@ -169,6 +185,10 @@ class Products extends Auths {
 
         if($res['status'] == 200)
             return $res['data'];
+        else if($res['status'] == 401){
+            self::refreshToken();
+            return self::productCategoryAttribute();
+        }
 
         return;
     }
@@ -201,6 +221,10 @@ class Products extends Auths {
 
         if($res['status'] == 200)
             return $res['data'];
+        else if($res['status'] == 401){
+            self::refreshToken();
+            return self::productBrand();
+        }
 
         return;
     }
@@ -229,6 +253,10 @@ class Products extends Auths {
 
         if($res['status'] == 200)
             return $res['data'];
+        else if($res['status'] == 401){
+            self::refreshToken();
+            return self::productPickupPoint();
+        }
 
         return;
     }
@@ -259,6 +287,10 @@ class Products extends Auths {
 
         if($res['status'] == 200)
             return $res['data'];
+        else if($res['status'] == 401){
+            self::refreshToken();
+            return self::productInProcess();
+        }
 
         return;
     }
@@ -289,6 +321,10 @@ class Products extends Auths {
 
         if($res['status'] == 200)
             return $res['data'];
+        else if($res['status'] == 401){
+            self::refreshToken();
+            return self::productRejectList();
+        }
 
         return;
     }
@@ -320,6 +356,10 @@ class Products extends Auths {
 
         if($res['status'] == 200)
             return $res['data'];
+        else if($res['status'] == 401){
+            self::refreshToken();
+            return self::productRejectListByMerchant();
+        }
 
         return;
     }
@@ -352,6 +392,10 @@ class Products extends Auths {
 
         if($res['status'] == 200)
             return $res['data'];
+        else if($res['status'] == 401){
+            self::refreshToken();
+            return self::productHistory();
+        }
 
         return;
     }
