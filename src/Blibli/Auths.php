@@ -5,7 +5,6 @@ namespace Blibli;
 use Exception;
 use Blibli\Config;
 use Blibli\Helpers\Rest;
-use Illuminate\Support\Facades\Storage;
 
 class Auths extends Config {
 
@@ -36,7 +35,7 @@ class Auths extends Config {
     }
 
     public static function getToken() {
-        if(!Storage::exists(self::$file_token)){
+        if(!self::existFile(self::$file_token)){
             $res = Rest::post(parent::URItoken().'?channelId='.self::$channelId, [
                 'grant_type' => 'password',
                 'username' => self::$username,
@@ -45,9 +44,9 @@ class Auths extends Config {
 
             self::$token = $res['status'] == 200?$res['data']:null;
             // saving token
-            Storage::put(self::$file_token,json_encode(self::$token));
+            self::putFile(self::$file_token,json_encode(self::$token));
         } else
-            self::$token = json_decode(Storage::get(self::$file_token));
+            self::$token = json_decode(self::getFile(self::$file_token));
     }
 
     public static function refreshToken(){
@@ -59,11 +58,10 @@ class Auths extends Config {
 
         if($res['status'] == 200){
             self::$token = $res['data'];
-            Storage::delete(self::$file_token);
-            Storage::put(self::$file_token,json_encode(self::$token));
+            self::putFile(self::$file_token,json_encode(self::$token));
         } else if($res['status'] == 400) {
             if($res['data']->error == 'invalid_grant'){
-                Storage::delete(self::$file_token);
+                self::deleteFile(self::$file_token);
                 self::getToken();
             }
         }

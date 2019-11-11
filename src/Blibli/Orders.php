@@ -34,7 +34,7 @@ class Orders extends Auths {
         // merge with request
         $param = self::mergeBody($param);
 
-        $res = Rest::header([
+        Rest::header([
             'x-blibli-mta-authorization' => "BMA ".self::$username.":".$signature,
             'x-blibli-mta-date-milis' => self::$milisecond,
             'Content-Type' => 'application/json',
@@ -42,6 +42,7 @@ class Orders extends Auths {
             'sessionId' => self::$uuid,
             'username' => self::$username
         ]);
+
         $res = Rest::get(self::URIorderList(),$param,self::$token->token_type." ".self::$token->access_token);
 
         if($res['status'] == 200)
@@ -68,7 +69,7 @@ class Orders extends Auths {
         // merge with request
         $param = self::mergeBody($param);
 
-        $res = Rest::header([
+        Rest::header([
             'x-blibli-mta-authorization' => "BMA ".self::$username.":".$signature,
             'x-blibli-mta-date-milis' => self::$milisecond,
             'Content-Type' => 'application/json',
@@ -101,7 +102,7 @@ class Orders extends Auths {
         // merge with request
         $param = self::mergeBody($param);
 
-        $res = Rest::header([
+        Rest::header([
             'x-blibli-mta-authorization' => "BMA ".self::$username.":".$signature,
             'x-blibli-mta-date-milis' => self::$milisecond,
             'Content-Type' => 'application/json',
@@ -134,7 +135,7 @@ class Orders extends Auths {
         // merge with request
         $param = self::mergeBody($param);
 
-        $res = Rest::header([
+        Rest::header([
             'x-blibli-mta-authorization' => "BMA ".self::$username.":".$signature,
             'x-blibli-mta-date-milis' => self::$milisecond,
             'Content-Type' => 'application/json',
@@ -168,7 +169,7 @@ class Orders extends Auths {
         // merge with request
         $param = self::mergeBody($param);
 
-        $res = Rest::header([
+        Rest::header([
             'x-blibli-mta-authorization' => "BMA ".self::$username.":".$signature,
             'x-blibli-mta-date-milis' => self::$milisecond,
             'Content-Type' => 'application/json',
@@ -206,7 +207,7 @@ class Orders extends Auths {
         // merge with request
         $param = self::mergeBody($param);
 
-        $res = Rest::header([
+        Rest::header([
             'x-blibli-mta-authorization' => "BMA ".self::$username.":".$signature,
             'x-blibli-mta-date-milis' => self::$milisecond,
             'Content-Type' => 'application/json',
@@ -242,7 +243,7 @@ class Orders extends Auths {
         // merge with request
         $param = self::mergeBody($param);
 
-        $res = Rest::header([
+        Rest::header([
             'x-blibli-mta-authorization' => "BMA ".self::$username.":".$signature,
             'x-blibli-mta-date-milis' => self::$milisecond,
             'Content-Type' => 'application/json',

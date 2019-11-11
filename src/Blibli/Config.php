@@ -66,6 +66,7 @@ class Config {
     public static $password;
     public static $clientID;
     public static $clientPass;
+    public static $appPath = __DIR__."/../../../../../storage/app/";
 
     public static $bodyParam = [];
 
@@ -108,6 +109,41 @@ class Config {
             return true;
         } else
             return;
+    }
+
+    public static function existFile($f){
+        return file_exists(self::$appPath.$f);
+    }
+
+    public static function getFile($f){
+        if(file_exists(self::$appPath.$f)){
+            $cont = file_get_contents(self::$appPath.$f);
+            if($cont != "null")
+                return $cont;
+            else
+                self::deleteFile(self::$appPath.$f);
+        }
+        return;
+    }
+
+    public static function putFile($f=null, $cont=null){
+        if(!is_null($f) && !is_null($cont)){
+            if(file_exists(self::$appPath.$f))
+                unlink(self::$appPath.$f);
+
+            file_put_contents(self::$appPath.$f, $cont);
+            return true;
+        }
+        return;
+    }
+
+    public static function deleteFile($f=null){
+        if(!is_null($f) && !is_null($cont)){
+            if(file_exists(self::$appPath.$f))
+                unlink(self::$appPath.$f);
+            return true;
+        }
+        return;
     }
 
     public static function setBody($p){

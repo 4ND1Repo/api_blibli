@@ -12,8 +12,6 @@ Class Rest {
         $header = self::$header;
         // merge header
         $header = array_merge($header, self::$head);
-        var_dump($header);
-        echo "<br>";
 
         if(!empty($token) && !is_null($token)){
             $authorization = 'Authorization: '.$token;
