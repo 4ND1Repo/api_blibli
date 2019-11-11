@@ -66,7 +66,7 @@ public function order(Request $r){
 - [ ] Product Operation
 - [ ] Product Discussion
 - [ ] SAS
-- [ ] Queue
+- [x] Queue
 - [ ] Obsolete API
 
 
@@ -92,3 +92,6 @@ public function order(Request $r){
 | Product Collection | Rejected Product List | \Blibli\Products | productRejectList() |
 | Product Collection | Rejected Product List by merchantSku | \Blibli\Products | productRejectListByMerchant() |
 | Product Collection | Product History | \Blibli\Products | productHistory() |
+| Queue Collection | Queue List | \Blibli\Queues | queueList() |
+| Queue Collection | Queue Detail | \Blibli\Queues | queueDetail() |
+| Obsolete API | Queue Status | \Blibli\Queues | queueStatus() |
