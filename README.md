@@ -8,6 +8,7 @@ Requirement :
 * Composer
 * Apache/Nginx
 * PHP version ^5.3
+* Based on documentation : [BLIBLI MERCHANT API DOCS 5.22.1.0](https://documenter.getpostman.com/view/5397152/RWaNP6XQ?version=latest#2b77e033-d605-4c37-9fb8-8df14027d4cc)
 
 Using :
 Open CLI client and navigate to laravel/lumen/symfony
@@ -68,7 +69,7 @@ Notes :
     // for php native
     $raw = json_decode(file_get_contents("php://input"));
     $order::setBody($raw);
-    
+
   ...
   ```
 ---
@@ -80,7 +81,7 @@ Notes :
 - [x] Product Collection
 - [ ] Product Operation
 - [ ] Product Discussion
-- [ ] SAS
+- [x] SAS
 - [x] Queue
 - [ ] Obsolete API
 
