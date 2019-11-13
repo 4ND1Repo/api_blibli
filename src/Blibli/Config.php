@@ -154,7 +154,7 @@ class Config {
 
     public static function mergeBody($body, $p=null){
         if(!is_null($p)){
-            if(is_array($p) && is_object($p))
+            if(is_array($p) || is_object($p))
                 foreach($p AS $k => $v) {
                     if(isset($body[$k])) $body[$k] = $v;
                 }

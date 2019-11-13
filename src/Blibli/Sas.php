@@ -14,7 +14,19 @@ class Sas extends Auths {
         $param = [
             'grant_type' => 'client_credentials'
         ];
+        // merge with request
+        $param = self::mergeBody($param);
+        
         $res = Rest::post(self::URItoken(),$param,self::$token->token_type." ".self::$token->access_token);
+
+        if($res['status'] == 200)
+            return $res['data'];
+        else if($res['status'] == 401){
+            self::refreshToken();
+            return self::sasReqToken();
+        }
+
+        return;
     }
 
     public static function sasCreateOrder(){
@@ -29,6 +41,9 @@ class Sas extends Auths {
                 ]
             ]
         ];
+        // merge with request
+        $param = self::mergeBody($param['raw']);
+
         $res = Rest::header([
             'Content-Type' => 'application/json',
             'requestId' => self::$uuid,
@@ -36,6 +51,15 @@ class Sas extends Auths {
             'username' => self::$username
         ]);
         $res = Rest::post(self::URIsasCreateOrder(),$param,self::$token->token_type." ".self::$token->access_token);
+
+        if($res['status'] == 200)
+            return $res['data'];
+        else if($res['status'] == 401){
+            self::refreshToken();
+            return self::sasCreateOrder();
+        }
+
+        return;
     }
 
     public static function sasApprovalOrder() {
@@ -44,6 +68,9 @@ class Sas extends Auths {
                 "orderIdList" => ["123456"]
             ]
         ];
+        // merge with request
+        $param = self::mergeBody($param)['raw'];
+
         $res = Rest::header([
             'Content-Type' => 'application/json',
             'requestId' => self::$uuid,
@@ -51,6 +78,15 @@ class Sas extends Auths {
             'username' => self::$username
         ]);
         $res = Rest::post(self::URIsasApprovalOrder(),$param,self::$token->token_type." ".self::$token->access_token);
+
+        if($res['status'] == 200)
+            return $res['data'];
+        else if($res['status'] == 401){
+            self::refreshToken();
+            return self::sasApprovalOrder();
+        }
+
+        return;
     }
 
     public static function sasApprovalProductByCode(){
@@ -59,6 +95,9 @@ class Sas extends Auths {
                 "productCodes" => ["MTA-0315456"]
             ]
         ];
+        // merge with request
+        $param = self::mergeBody($param['raw']);
+
         $res = Rest::header([
             'Content-Type' => 'application/json',
             'requestId' => self::$uuid,
@@ -66,6 +105,15 @@ class Sas extends Auths {
             'username' => self::$username
         ]);
         $res = Rest::post(self::URIsasApprovalOrderByCode(),$param,self::$token->token_type." ".self::$token->access_token);
+
+        if($res['status'] == 200)
+            return $res['data'];
+        else if($res['status'] == 401){
+            self::refreshToken();
+            return self::sasApprovalProductByCode();
+        }
+
+        return;
     }
 
     public static function sasApprovalProductByName(){
@@ -75,6 +123,9 @@ class Sas extends Auths {
 	            "productNames" => ["Automation 2019-06-13 14:23:10"]
             ]
         ];
+        // merge with request
+        $param = self::mergeBody($param['raw']);
+
         $res = Rest::header([
             'Content-Type' => 'application/json',
             'requestId' => self::$uuid,
@@ -82,5 +133,14 @@ class Sas extends Auths {
             'username' => self::$username
         ]);
         $res = Rest::post(self::URIsasApprovalOrderByName(),$param,self::$token->token_type." ".self::$token->access_token);
+
+        if($res['status'] == 200)
+            return $res['data'];
+        else if($res['status'] == 401){
+            self::refreshToken();
+            return self::sasApprovalProductByName();
+        }
+
+        return;
     }
 }

@@ -56,6 +56,21 @@ public function order(Request $r){
 }
 
 ```
+
+Notes :
+- if POST data is raw format use this line for in your controller or script :
+  ```php
+  ...
+    // for lumen/laravel
+    $raw = json_decode(Request::getContent());
+    $order::setBody($raw);
+
+    // for php native
+    $raw = json_decode(file_get_contents("php://input"));
+    $order::setBody($raw);
+    
+  ...
+  ```
 ---
 ####Ongoing Progress
 ---
@@ -73,25 +88,30 @@ public function order(Request $r){
 ---
 ####Cheatsheet
 
-|   Type   | Name | Namespace | Class |
-| -------- | -------- | ---- | ---|
-|  Order Collection | Order List  | \Blibli\Orders | orderList() |
-|  Order Collection | Order Detail | \Blibli\Orders | orderDetail() |
-|  Order Collection | Download shipping label | \Blibli\Orders | orderDownloadShipping() |
-|  Order Collection | Airway Bill Information  | \Blibli\Orders | orderAirwayBill() |
-|  Order Collection | Combine Shipping List  | \Blibli\Orders | orderCombineShippingList() |
-|  Order Collection | Returned Order List  | \Blibli\Orders | orderReturnList() |
-|  Order Collection | Returned Order Detail  | \Blibli\Orders | orderReturnDetail() |
-| Product Collection | Product List V2 | \Blibli\Products | productListV2() |
-| Product Collection | Product Detail | \Blibli\Products | productDetail() |
-| Product Collection | Category Tree | \Blibli\Products | productCategoryTree() |
-| Product Collection | Category Attribute List | \Blibli\Products | productCategoryAttribute() |
-| Product Collection | Brand List | \Blibli\Products | productBrand() |
-| Product Collection | Pickup Point List | \Blibli\Products | productPickupPoint() |
-| Product Collection | Product In Process | \Blibli\Products | productInProcess() |
-| Product Collection | Rejected Product List | \Blibli\Products | productRejectList() |
-| Product Collection | Rejected Product List by merchantSku | \Blibli\Products | productRejectListByMerchant() |
-| Product Collection | Product History | \Blibli\Products | productHistory() |
-| Queue Collection | Queue List | \Blibli\Queues | queueList() |
-| Queue Collection | Queue Detail | \Blibli\Queues | queueDetail() |
-| Obsolete API | Queue Status | \Blibli\Queues | queueStatus() |
+|   Type   | Name | Namespace | Class | Tested |
+| ---- | ---- | ---------- | ----- | ------ |
+|  Order Collection | Order List  | \Blibli\Orders | orderList() | v |
+|  Order Collection | Order Detail | \Blibli\Orders | orderDetail() | v |
+|  Order Collection | Download shipping label | \Blibli\Orders | orderDownloadShipping() | v |
+|  Order Collection | Airway Bill Information  | \Blibli\Orders | orderAirwayBill() | v |
+|  Order Collection | Combine Shipping List  | \Blibli\Orders | orderCombineShippingList() | v |
+|  Order Collection | Returned Order List  | \Blibli\Orders | orderReturnList() | v |
+|  Order Collection | Returned Order Detail  | \Blibli\Orders | orderReturnDetail() | v |
+| Product Collection | Product List V2 | \Blibli\Products | productListV2() | v |
+| Product Collection | Product Detail | \Blibli\Products | productDetail() | v |
+| Product Collection | Category Tree | \Blibli\Products | productCategoryTree() | v |
+| Product Collection | Category Attribute List | \Blibli\Products | productCategoryAttribute() | v |
+| Product Collection | Brand List | \Blibli\Products | productBrand() | v |
+| Product Collection | Pickup Point List | \Blibli\Products | productPickupPoint() | v |
+| Product Collection | Product In Process | \Blibli\Products | productInProcess() | v |
+| Product Collection | Rejected Product List | \Blibli\Products | productRejectList() | v |
+| Product Collection | Rejected Product List by merchantSku | \Blibli\Products | productRejectListByMerchant() | v |
+| Product Collection | Product History | \Blibli\Products | productHistory() | v |
+| Queue Collection | Queue List | \Blibli\Queues | queueList() | v |
+| Queue Collection | Queue Detail | \Blibli\Queues | queueDetail() | v |
+| Self Approval Service | Request Token for SAS | \Blibli\Sas | sasReqToken() | x |
+| Self Approval Service | Order Creation Service | \Blibli\Sas | sasCreateOrder() | x |
+| Self Approval Service | Order Approval Service | \Blibli\Sas | sasApprovalOrder() | x |
+| Self Approval Service | Product Approval Service by Product Code | \Blibli\Sas | sasApprovalProductByCode() | x |
+| Self Approval Service | Product Approval Service by Product Name | \Blibli\Sas | sasApprovalProductByName() | x |
+| Obsolete API | Queue Status | \Blibli\Queues | queueStatus() | v |
