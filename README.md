@@ -80,10 +80,10 @@ Notes :
 - [x] Order Operation
 - [x] Product Collection
 - [x] Product Operation
-- [ ] Product Discussion
+- [x] Product Discussion
 - [x] SAS
 - [x] Queue
-- [ ] Obsolete API
+- [x] Obsolete API
 
 
 ---
@@ -120,6 +120,10 @@ Notes :
 | Product Operation | Create Product V2 | \Blibli\Products | productCreateV2() | x |
 | Product Operation | Archive Product | \Blibli\Products | productArchive() | x |
 | Product Operation | Unarchive Product | \Blibli\Products | productUnarchive() | x |
+| Product Discussion | Question List | \Blibli\Products | discussList() | x |
+| Product Discussion | Create Answer | \Blibli\Products | discussAnswer() | x |
+| Product Discussion | Get Answer | \Blibli\Products | discussGetAnswer() | x |
+| Product Discussion | Report Question | \Blibli\Products | discussReport() | x |
 | Queue Collection | Queue List | \Blibli\Queues | queueList() | v |
 | Queue Collection | Queue Detail | \Blibli\Queues | queueDetail() | v |
 | Self Approval Service | Request Token for SAS | \Blibli\Sas | sasReqToken() | x |
@@ -129,3 +133,6 @@ Notes :
 | Self Approval Service | Product Approval Service by Product Name | \Blibli\Sas | sasApprovalProductByName() | x |
 | Obsolete API | Queue Status | \Blibli\Queues | queueStatus() | v |
 | Obsolete API | Product List | \Blibli\Products | productList() | v |
+| Obsolete API | Create Product v1 | \Blibli\Products | productCreate() | x |
+| Obsolete API | Upload Product Image V2 | \Blibli\Products | productUploadImage() | x |
+| Obsolete API | Download Airway Bill | \Blibli\Orders | downloadAirwayBill() | x |

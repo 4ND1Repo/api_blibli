@@ -446,6 +446,10 @@ class Products extends Auths {
 
         if($res['status'] == 200)
             return $res['data'];
+        else if($res['status'] == 401){
+            self::refreshToken();
+            return self::productUpdate();
+        }
 
         return;
     }
@@ -581,6 +585,10 @@ class Products extends Auths {
 
         if($res['status'] == 200)
             return $res['data'];
+        else if($res['status'] == 401){
+            self::refreshToken();
+            return self::productUpdateItem();
+        }
 
         return;
     }
@@ -681,6 +689,10 @@ class Products extends Auths {
 
         if($res['status'] == 200)
             return $res['data'];
+        else if($res['status'] == 401){
+            self::refreshToken();
+            return self::productCreateV2();
+        }
 
         return;
     }
@@ -717,6 +729,10 @@ class Products extends Auths {
 
         if($res['status'] == 200)
             return $res['data'];
+        else if($res['status'] == 401){
+            self::refreshToken();
+            return self::productArchive();
+        }
 
         return;
     }
@@ -753,7 +769,307 @@ class Products extends Auths {
 
         if($res['status'] == 200)
             return $res['data'];
+        else if($res['status'] == 401){
+            self::refreshToken();
+            return self::productUnarchive();
+        }
 
         return;
     }
+
+
+    // ==== for product discussion ====
+    public static function discussList() {
+        $uri = '/mtaapi'.(explode('/mta',self::URIdiscussList()))[1];
+
+        $param = [
+            'businessPartnerCode' => self::$merchantId,
+            'requestId' => self::$channelId."-".self::uuid(),
+            'channelId' => self::$channelId,
+            'storeId' => 10001,
+            'username' => self::$username,
+            'answered' => "",
+            'identifierValue' => '',
+            'starter' => '',
+            'date' => '',
+            'startDate' => '',
+            'endDate' => '',
+            'categoryCode' => '',
+            'type' => '',
+            'state' => 'SHOW',
+            'sortedBy' => 'createdDate',
+            'sortDirection' => 'DESC',
+            'page' => 0,
+            'size' => 10
+        ];
+        // merge with request
+        $param['raw'] = self::mergeBody($param['raw']);
+        $signature = self::signature(self::$milisecond,self::$secretKey,'GET','','',$uri);
+
+        Rest::header([
+            'x-blibli-mta-authorization' => "BMA ".self::$username.":".$signature,
+            'x-blibli-mta-date-milis' => self::$milisecond,
+            'Content-Type' => 'application/json',
+            'requestId' => self::$channelId."-".self::$uuid,
+            'sessionId' => self::$uuid,
+            'username' => self::$username
+        ]);
+        $res = Rest::get(self::URIdiscussList(),$param,self::$token->token_type." ".self::$token->access_token);
+
+        if($res['status'] == 200)
+            return $res['data'];
+        else if($res['status'] == 401){
+            self::refreshToken();
+            return self::discussList();
+        }
+
+        return;
+    }
+
+    public static function discussAnswer() {
+        $param = [
+            'raw' => [
+                "answer" => "string"
+            ]
+        ];
+        // merge with request
+        $param['raw'] = self::mergeBody($param['raw']);
+
+        $uri = '/mtaapi'.(explode('/mta',self::URIdiscussAnswer()))[1];
+        $signature = self::signature(self::$milisecond,self::$secretKey,'POST',json_encode($param['raw']),"application/json",$uri);
+
+        $res = Rest::header([
+            'x-blibli-mta-authorization' => "BMA ".self::$username.":".$signature,
+            'x-blibli-mta-date-milis' => self::$milisecond,
+            'Content-Type' => 'application/json',
+            'requestId' => self::$channelId."-".self::$uuid,
+            'sessionId' => self::$uuid,
+            'username' => self::$username
+        ]);
+
+        $url = "?requestId=".self::$channelId."-".self::$uuid.
+            "&businessPartnerCode=".self::$merchantId.
+            "&username=".self::$username.
+            "&channelId=".self::$channelId.
+            "&storeId=10001";
+        $res = Rest::post(self::URIdiscussAnswer().$url,$param,self::$token->token_type." ".self::$token->access_token);
+
+        if($res['status'] == 200)
+            return $res['data'];
+        else if($res['status'] == 401){
+            self::refreshToken();
+            return self::discussAnswer();
+        }
+
+        return;
+    }
+
+    public static function discussGetAnswer() {
+        $uri = '/mtaapi'.(explode('/mta',self::URIdiscussGetAnswer()))[1];
+
+        $param = [
+            'requestId' => self::$channelId."-".self::uuid(),
+            'channelId' => self::$channelId,
+            'storeId' => 10001,
+            'username' => self::$username,
+            'sortedBy' => '',
+            'sortDirection' => '',
+            'page' => 0,
+            'size' => 10
+        ];
+        // merge with request
+        $param['raw'] = self::mergeBody($param['raw']);
+        $signature = self::signature(self::$milisecond,self::$secretKey,'GET','','',$uri);
+
+        Rest::header([
+            'x-blibli-mta-authorization' => "BMA ".self::$username.":".$signature,
+            'x-blibli-mta-date-milis' => self::$milisecond,
+            'Content-Type' => 'application/json',
+            'requestId' => self::$channelId."-".self::$uuid,
+            'sessionId' => self::$uuid,
+            'username' => self::$username
+        ]);
+        $res = Rest::get(self::URIdiscussGetAnswer(),$param,self::$token->token_type." ".self::$token->access_token);
+
+        if($res['status'] == 200)
+            return $res['data'];
+        else if($res['status'] == 401){
+            self::refreshToken();
+            return self::discussGetAnswer();
+        }
+
+        return;
+    }
+
+    public static function discussReport() {
+        $param = [
+            'raw' => [
+                "reason" => ""
+            ]
+        ];
+        // merge with request
+        $param['raw'] = self::mergeBody($param['raw']);
+
+        $uri = '/mtaapi'.(explode('/mta',self::URIdiscussReport()))[1];
+        $signature = self::signature(self::$milisecond,self::$secretKey,'PUT',json_encode($param['raw']),"application/json",$uri);
+
+        $res = Rest::header([
+            'x-blibli-mta-authorization' => "BMA ".self::$username.":".$signature,
+            'x-blibli-mta-date-milis' => self::$milisecond,
+            'Content-Type' => 'application/json',
+            'requestId' => self::$channelId."-".self::$uuid,
+            'sessionId' => self::$uuid,
+            'username' => self::$username
+        ]);
+
+        $url = "?requestId=".self::$channelId."-".self::$uuid.
+            "&businessPartnerCode=".self::$merchantId.
+            "&username=".self::$username.
+            "&channelId=".self::$channelId.
+            "&storeId=10001";
+        $res = Rest::put(self::URIdiscussReport().$url,$param,self::$token->token_type." ".self::$token->access_token);
+
+        if($res['status'] == 200)
+            return $res['data'];
+        else if($res['status'] == 401){
+            self::refreshToken();
+            return self::discussReport();
+        }
+
+        return;
+    }
+
+    // Obsolete API
+    public static function productCreate(){
+        $param = [
+            'raw' => [
+                "merchantCode"=> "TOB-16403",
+                "products"=> [
+                    [
+                        "merchantCode"=> "TOB-16403",
+                        "categoryCode"=> "10505",
+                        "productName"=> "Testing From API Ken 2",
+                        "url"=> "http=>//gosoft.web.id",
+                        "merchantSku"=> "ini Merchant SKU",
+                        "tipePenanganan"=> 1,
+                        "price"=> 111000,
+                        "salePrice"=> 8000,
+                        "stock"=> 12,
+                        "minimumStock"=> 0,
+                        "pickupPointCode"=> "PP-3000712",
+                        "length"=> 12,
+                        "width"=> 22,
+                        "height"=> 22,
+                        "weight"=> 112,
+                        "desc"=> "test utapes flat",
+                        "uniqueSellingPoint"=> "tes usp test utapes flat",
+                        "productStory"=> "tes ps test utapes flat",
+                        "upcCode"=> "1231230010",
+                        "display"=> false,
+                        "buyable"=> false,
+                        "installation"=> false,
+                        "features"=> [
+                            [
+                                "name"=> "Brand",
+                                "value"=> "Momaey"
+                            ],
+                            [
+                                "name"=> "Material",
+                                "value"=> "Metal"
+                            ],
+                            [
+                                "name"=> "Care Label",
+                                "value"=> "Customer Care"
+                            ]
+                        ],
+                        "variasi"=> [
+                            [
+                                "name"=> "Warna",
+                                "value"=> "Orange Pink"
+                            ],
+                            [
+                                "name"=> "Ukuran",
+                                "value"=> "32"
+                            ]
+                        ],
+                        "images"=> [
+                            [
+                                "locationPath"=> "momaey_testing-from-api-ken-1_full01.jpg",
+                                "sequence"=> 0
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+        ];
+        // merge with request
+        $param['raw'] = self::mergeBody($param['raw']);
+
+        $uri = '/mtaapi'.(explode('/mta',self::URIproductCreate()))[1];
+        $signature = self::signature(self::$milisecond,self::$secretKey,'POST',json_encode($param['raw']),"application/json",$uri);
+
+        $res = Rest::header([
+            'x-blibli-mta-authorization' => "BMA ".self::$username.":".$signature,
+            'x-blibli-mta-date-milis' => self::$milisecond,
+            'Content-Type' => 'application/json',
+            'requestId' => self::$channelId."-".self::$uuid,
+            'sessionId' => self::$uuid,
+            'username' => self::$username
+        ]);
+
+        $res = Rest::post(self::URIproductCreate(),$param,self::$token->token_type." ".self::$token->access_token);
+
+        if($res['status'] == 200)
+            return $res['data'];
+        else if($res['status'] == 401){
+            self::refreshToken();
+            return self::productCreate();
+        }
+
+        return;
+    }
+
+    public static function productUploadImage(){
+        $param = [
+            "merchantCode" => "TOB-16403",
+            "productCode" => "MTA-0315264",
+            "productImages" => [],
+            "productItem" => [
+                [
+                    "productItemCode" => "MTA-0310803-00001",
+                    "images" => []
+                ],
+                [
+                    "productItemCode" => "MTA-0310803-00002",
+                    "images" => []
+                ],
+            ]
+        ];
+        // merge with request
+        $param = self::mergeBody($param);
+
+        $uri = '/mtaapi'.(explode('/mta',self::URIproductUploadImage()))[1];
+        $signature = self::signature(self::$milisecond,self::$secretKey,'POST',json_encode($param['raw']),"application/json",$uri);
+
+        $res = Rest::header([
+            'x-blibli-mta-authorization' => "BMA ".self::$username.":".$signature,
+            'x-blibli-mta-date-milis' => self::$milisecond,
+            'Content-Type' => 'application/json',
+            'requestId' => self::$channelId."-".self::$uuid,
+            'sessionId' => self::$uuid,
+            'username' => self::$username
+        ]);
+
+        $res = Rest::post(self::URIproductUploadImage(),$param,self::$token->token_type." ".self::$token->access_token);
+
+        if($res['status'] == 200)
+            return $res['data'];
+        else if($res['status'] == 401){
+            self::refreshToken();
+            return self::productUploadImage();
+        }
+
+        return;
+    }
+
 }

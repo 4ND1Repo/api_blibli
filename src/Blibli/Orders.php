@@ -290,7 +290,7 @@ class Orders extends Auths {
             "&businessPartnerCode=".self::$merchantId.
             "&channelId=".self::$channelId.
             "&storeId=10001";
-        $res = Rest::get(self::URIorderCreatePackage().$url,$param,self::$token->token_type." ".self::$token->access_token);
+        $res = Rest::post(self::URIorderCreatePackage().$url,$param,self::$token->token_type." ".self::$token->access_token);
 
         if($res['status'] == 200)
             return $res['data'];
@@ -334,7 +334,7 @@ class Orders extends Auths {
         $url = "?requestId=".self::$channelId."-".self::$uuid.
             "&channelId=".self::$channelId.
             "&storeId=10001";
-        $res = Rest::get(self::URIorderFullfillRegular().$url,$param,self::$token->token_type." ".self::$token->access_token);
+        $res = Rest::post(self::URIorderFullfillRegular().$url,$param,self::$token->token_type." ".self::$token->access_token);
 
         if($res['status'] == 200)
             return $res['data'];
@@ -382,7 +382,7 @@ class Orders extends Auths {
         $url = "?requestId=".self::$channelId."-".self::$uuid.
             "&channelId=".self::$channelId.
             "&storeId=10001";
-        $res = Rest::get(self::URIorderFullfillBig().$url,$param,self::$token->token_type." ".self::$token->access_token);
+        $res = Rest::post(self::URIorderFullfillBig().$url,$param,self::$token->token_type." ".self::$token->access_token);
 
         if($res['status'] == 200)
             return $res['data'];
@@ -418,7 +418,7 @@ class Orders extends Auths {
         $url = "?requestId=".self::$channelId."-".self::$uuid.
             "&channelId=".self::$channelId.
             "&storeId=10001";
-        $res = Rest::get(self::URIorderFullfillBopis().$url,$param,self::$token->token_type." ".self::$token->access_token);
+        $res = Rest::post(self::URIorderFullfillBopis().$url,$param,self::$token->token_type." ".self::$token->access_token);
 
         if($res['status'] == 200)
             return $res['data'];
@@ -456,7 +456,7 @@ class Orders extends Auths {
         $url = "?requestId=".self::$channelId."-".self::$uuid.
             "&channelId=".self::$channelId.
             "&storeId=10001";
-        $res = Rest::get(self::URIorderFullfillPartial().$url,$param,self::$token->token_type." ".self::$token->access_token);
+        $res = Rest::post(self::URIorderFullfillPartial().$url,$param,self::$token->token_type." ".self::$token->access_token);
 
         if($res['status'] == 200)
             return $res['data'];
@@ -533,7 +533,7 @@ class Orders extends Auths {
             "&businessPartnerCode=".self::$merchantId.
             "&channelId=".self::$channelId.
             "&storeId=10001";
-        $res = Rest::get(self::URIorderSettle().$url,$param,self::$token->token_type." ".self::$token->access_token);
+        $res = Rest::post(self::URIorderSettle().$url,$param,self::$token->token_type." ".self::$token->access_token);
 
         if($res['status'] == 200)
             return $res['data'];
@@ -544,4 +544,40 @@ class Orders extends Auths {
 
         return;
     }
+
+    // Obsolete API
+    public static function downloadAirwayBill() {
+        $uri = '/mtaapi'.(explode('/mta',self::URIdownloadAirwayBill()))[1];
+        $signature = self::signature(self::$milisecond,self::$secretKey,'GET','','',$uri);
+
+        $param = [
+            'businessPartnerCode' => self::$merchantId,
+            'requestId' => self::$channelId."-".self::uuid(),
+            'channelId' => self::$channelId,
+            'storeId' => 10001,
+            'orderItemNo' => 12056279554
+        ];
+        // merge with request
+        $param = self::mergeBody($param);
+
+        Rest::header([
+            'x-blibli-mta-authorization' => "BMA ".self::$username.":".$signature,
+            'x-blibli-mta-date-milis' => self::$milisecond,
+            'Content-Type' => 'application/json',
+            'requestId' => self::$channelId."-".self::$uuid,
+            'sessionId' => self::$uuid,
+            'username' => self::$username
+        ]);
+        $res = Rest::get(self::URIdownloadAirwayBill(),$param,self::$token->token_type." ".self::$token->access_token);
+
+        if($res['status'] == 200)
+            return $res['data'];
+        else if($res['status'] == 401){
+            self::refreshToken();
+            return self::downloadAirwayBill();
+        }
+
+        return;
+    }
+
 }
