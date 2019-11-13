@@ -77,9 +77,9 @@ Notes :
 ---
 - [x] Authentication
 - [x] Order Collection
-- [ ] Order Operation
+- [x] Order Operation
 - [x] Product Collection
-- [ ] Product Operation
+- [x] Product Operation
 - [ ] Product Discussion
 - [x] SAS
 - [x] Queue
@@ -91,13 +91,20 @@ Notes :
 
 |   Type   | Name | Namespace | Class | Tested |
 | ---- | ---- | ---------- | ----- | ------ |
-|  Order Collection | Order List  | \Blibli\Orders | orderList() | v |
-|  Order Collection | Order Detail | \Blibli\Orders | orderDetail() | v |
-|  Order Collection | Download shipping label | \Blibli\Orders | orderDownloadShipping() | v |
-|  Order Collection | Airway Bill Information  | \Blibli\Orders | orderAirwayBill() | v |
-|  Order Collection | Combine Shipping List  | \Blibli\Orders | orderCombineShippingList() | v |
-|  Order Collection | Returned Order List  | \Blibli\Orders | orderReturnList() | v |
-|  Order Collection | Returned Order Detail  | \Blibli\Orders | orderReturnDetail() | v |
+| Order Collection | Order List  | \Blibli\Orders | orderList() | v |
+| Order Collection | Order Detail | \Blibli\Orders | orderDetail() | v |
+| Order Collection | Download shipping label | \Blibli\Orders | orderDownloadShipping() | v |
+| Order Collection | Airway Bill Information  | \Blibli\Orders | orderAirwayBill() | v |
+| Order Collection | Combine Shipping List  | \Blibli\Orders | orderCombineShippingList() | v |
+| Order Collection | Returned Order List  | \Blibli\Orders | orderReturnList() | v |
+| Order Collection | Returned Order Detail  | \Blibli\Orders | orderReturnDetail() | v |
+| Order Operation | Create Package  | \Blibli\Orders | orderCreatePackage() | x |
+| Order Operation | Fullfil Regular Order API  | \Blibli\Orders | orderFullfillRegular() | x |
+| Order Operation | Fullfil Big Product Order  | \Blibli\Orders | orderFullfillBig() | x |
+| Order Operation | Fullfil BOPIS Order  | \Blibli\Orders | orderFullfillBopis() | x |
+| Order Operation | Partial Fulfill Order  | \Blibli\Orders | orderFullfillPartial() | x |
+| Order Operation | Update Dropship AWB  | \Blibli\Orders | orderUpdateDropship() | x |
+| Order Operation | Settle Order  | \Blibli\Orders | orderSettle() | x |
 | Product Collection | Product List V2 | \Blibli\Products | productListV2() | v |
 | Product Collection | Product Detail | \Blibli\Products | productDetail() | v |
 | Product Collection | Category Tree | \Blibli\Products | productCategoryTree() | v |
@@ -108,6 +115,11 @@ Notes :
 | Product Collection | Rejected Product List | \Blibli\Products | productRejectList() | v |
 | Product Collection | Rejected Product List by merchantSku | \Blibli\Products | productRejectListByMerchant() | v |
 | Product Collection | Product History | \Blibli\Products | productHistory() | v |
+| Product Operation | Update Product Item Summary | \Blibli\Products | productUpdate() | x |
+| Product Operation | Update Product Item Detail | \Blibli\Products | productUpdateItem() | x |
+| Product Operation | Create Product V2 | \Blibli\Products | productCreateV2() | x |
+| Product Operation | Archive Product | \Blibli\Products | productArchive() | x |
+| Product Operation | Unarchive Product | \Blibli\Products | productUnarchive() | x |
 | Queue Collection | Queue List | \Blibli\Queues | queueList() | v |
 | Queue Collection | Queue Detail | \Blibli\Queues | queueDetail() | v |
 | Self Approval Service | Request Token for SAS | \Blibli\Sas | sasReqToken() | x |
@@ -116,3 +128,4 @@ Notes :
 | Self Approval Service | Product Approval Service by Product Code | \Blibli\Sas | sasApprovalProductByCode() | x |
 | Self Approval Service | Product Approval Service by Product Name | \Blibli\Sas | sasApprovalProductByName() | x |
 | Obsolete API | Queue Status | \Blibli\Queues | queueStatus() | v |
+| Obsolete API | Product List | \Blibli\Products | productList() | v |
