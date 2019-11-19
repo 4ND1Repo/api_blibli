@@ -1,4 +1,4 @@
-##API for connect to blibli.com
+## API for connect to blibli.com
 
 Donate me please...
 [Paypal](https://www.paypal.me/andifauji)
@@ -73,7 +73,7 @@ Notes :
   ...
   ```
 ---
-####Ongoing Progress
+#### Ongoing Progress
 ---
 - [x] Authentication
 - [x] Order Collection
@@ -87,7 +87,7 @@ Notes :
 
 
 ---
-####Cheatsheet
+#### Cheatsheet
 
 |   Type   | Name | Namespace | Class | Tested |
 | ---- | ---- | ---------- | ----- | ------ |
