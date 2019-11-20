@@ -37,6 +37,10 @@ class Queues extends Auths {
             'username' => self::$username
         ]);
 
+        // check token
+        if(!is_object(self::$token))
+            return array("error" => true, "error_message" => "Can't get Token from Blibli, please wait 5 minutes");
+
         $res = Rest::get(self::URIqueueList(),$param,self::$token->token_type." ".self::$token->access_token);
 
         if($res['status'] == 200)
@@ -68,6 +72,10 @@ class Queues extends Auths {
             'sessionId' => self::$uuid,
             'username' => self::$username
         ]);
+
+        // check token
+        if(!is_object(self::$token))
+            return array("error" => true, "error_message" => "Can't get Token from Blibli, please wait 5 minutes");
 
         $res = Rest::get(self::URIqueueStatus(),$param,self::$token->token_type." ".self::$token->access_token);
 
@@ -101,6 +109,10 @@ class Queues extends Auths {
             'sessionId' => self::$uuid,
             'username' => self::$username
         ]);
+
+        // check token
+        if(!is_object(self::$token))
+            return array("error" => true, "error_message" => "Can't get Token from Blibli, please wait 5 minutes");
 
         $res = Rest::get(self::URIqueueDetail(),$param,self::$token->token_type." ".self::$token->access_token);
 

@@ -43,6 +43,10 @@ class Orders extends Auths {
             'username' => self::$username
         ]);
 
+        // check token
+        if(!is_object(self::$token))
+            return array("error" => true, "error_message" => "Can't get Token from Blibli, please wait 5 minutes");
+
         $res = Rest::get(self::URIorderList(),$param,self::$token->token_type." ".self::$token->access_token);
 
         if($res['status'] == 200)
@@ -77,6 +81,11 @@ class Orders extends Auths {
             'sessionId' => self::$uuid,
             'username' => self::$username
         ]);
+
+        // check token
+        if(!is_object(self::$token))
+            return array("error" => true, "error_message" => "Can't get Token from Blibli, please wait 5 minutes");
+
         $res = Rest::get(self::URIorderDetail(),$param,self::$token->token_type." ".self::$token->access_token);
 
         if($res['status'] == 200)
@@ -110,6 +119,11 @@ class Orders extends Auths {
             'sessionId' => self::$uuid,
             'username' => self::$username
         ]);
+
+        // check token
+        if(!is_object(self::$token))
+            return array("error" => true, "error_message" => "Can't get Token from Blibli, please wait 5 minutes");
+
         $res = Rest::get(self::URIorderDownloadShipping(),$param,self::$token->token_type." ".self::$token->access_token);
 
         if($res['status'] == 200)
@@ -143,6 +157,11 @@ class Orders extends Auths {
             'sessionId' => self::$uuid,
             'username' => self::$username
         ]);
+
+        // check token
+        if(!is_object(self::$token))
+            return array("error" => true, "error_message" => "Can't get Token from Blibli, please wait 5 minutes");
+
         $res = Rest::get(self::URIorderAirwayBill(),$param,self::$token->token_type." ".self::$token->access_token);
 
         if($res['status'] == 200)
@@ -177,6 +196,11 @@ class Orders extends Auths {
             'sessionId' => self::$uuid,
             'username' => self::$username
         ]);
+
+        // check token
+        if(!is_object(self::$token))
+            return array("error" => true, "error_message" => "Can't get Token from Blibli, please wait 5 minutes");
+
         $res = Rest::get(self::URIorderCombineShippingList(),$param,self::$token->token_type." ".self::$token->access_token);
 
         if($res['status'] == 200)
@@ -215,6 +239,11 @@ class Orders extends Auths {
             'sessionId' => self::$uuid,
             'username' => self::$username
         ]);
+
+        // check token
+        if(!is_object(self::$token))
+            return array("error" => true, "error_message" => "Can't get Token from Blibli, please wait 5 minutes");
+
         $res = Rest::get(self::URIorderReturnList(),$param,self::$token->token_type." ".self::$token->access_token);
 
         if($res['status'] == 200)
@@ -251,6 +280,11 @@ class Orders extends Auths {
             'sessionId' => self::$uuid,
             'username' => self::$username
         ]);
+
+        // check token
+        if(!is_object(self::$token))
+            return array("error" => true, "error_message" => "Can't get Token from Blibli, please wait 5 minutes");
+
         $res = Rest::get(self::URIorderReturnDetail(),$param,self::$token->token_type." ".self::$token->access_token);
 
         if($res['status'] == 200)
@@ -290,6 +324,11 @@ class Orders extends Auths {
             "&businessPartnerCode=".self::$merchantId.
             "&channelId=".self::$channelId.
             "&storeId=10001";
+
+        // check token
+        if(!is_object(self::$token))
+            return array("error" => true, "error_message" => "Can't get Token from Blibli, please wait 5 minutes");
+    
         $res = Rest::post(self::URIorderCreatePackage().$url,$param,self::$token->token_type." ".self::$token->access_token);
 
         if($res['status'] == 200)
@@ -334,6 +373,11 @@ class Orders extends Auths {
         $url = "?requestId=".self::$channelId."-".self::$uuid.
             "&channelId=".self::$channelId.
             "&storeId=10001";
+
+        // check token
+        if(!is_object(self::$token))
+            return array("error" => true, "error_message" => "Can't get Token from Blibli, please wait 5 minutes");
+    
         $res = Rest::post(self::URIorderFullfillRegular().$url,$param,self::$token->token_type." ".self::$token->access_token);
 
         if($res['status'] == 200)
@@ -382,6 +426,11 @@ class Orders extends Auths {
         $url = "?requestId=".self::$channelId."-".self::$uuid.
             "&channelId=".self::$channelId.
             "&storeId=10001";
+
+        // check token
+        if(!is_object(self::$token))
+            return array("error" => true, "error_message" => "Can't get Token from Blibli, please wait 5 minutes");
+    
         $res = Rest::post(self::URIorderFullfillBig().$url,$param,self::$token->token_type." ".self::$token->access_token);
 
         if($res['status'] == 200)
@@ -418,6 +467,11 @@ class Orders extends Auths {
         $url = "?requestId=".self::$channelId."-".self::$uuid.
             "&channelId=".self::$channelId.
             "&storeId=10001";
+
+        // check token
+        if(!is_object(self::$token))
+            return array("error" => true, "error_message" => "Can't get Token from Blibli, please wait 5 minutes");
+    
         $res = Rest::post(self::URIorderFullfillBopis().$url,$param,self::$token->token_type." ".self::$token->access_token);
 
         if($res['status'] == 200)
@@ -456,6 +510,11 @@ class Orders extends Auths {
         $url = "?requestId=".self::$channelId."-".self::$uuid.
             "&channelId=".self::$channelId.
             "&storeId=10001";
+
+        // check token
+        if(!is_object(self::$token))
+            return array("error" => true, "error_message" => "Can't get Token from Blibli, please wait 5 minutes");
+    
         $res = Rest::post(self::URIorderFullfillPartial().$url,$param,self::$token->token_type." ".self::$token->access_token);
 
         if($res['status'] == 200)
@@ -492,6 +551,11 @@ class Orders extends Auths {
             'sessionId' => self::$uuid,
             'username' => self::$username
         ]);
+
+        // check token
+        if(!is_object(self::$token))
+            return array("error" => true, "error_message" => "Can't get Token from Blibli, please wait 5 minutes");
+
         $res = Rest::get(self::URIorderUpdateDropship(),$param,self::$token->token_type." ".self::$token->access_token);
 
         if($res['status'] == 200)
@@ -533,6 +597,11 @@ class Orders extends Auths {
             "&businessPartnerCode=".self::$merchantId.
             "&channelId=".self::$channelId.
             "&storeId=10001";
+
+        // check token
+        if(!is_object(self::$token))
+            return array("error" => true, "error_message" => "Can't get Token from Blibli, please wait 5 minutes");
+    
         $res = Rest::post(self::URIorderSettle().$url,$param,self::$token->token_type." ".self::$token->access_token);
 
         if($res['status'] == 200)
@@ -568,6 +637,11 @@ class Orders extends Auths {
             'sessionId' => self::$uuid,
             'username' => self::$username
         ]);
+
+        // check token
+        if(!is_object(self::$token))
+            return array("error" => true, "error_message" => "Can't get Token from Blibli, please wait 5 minutes");
+
         $res = Rest::get(self::URIdownloadAirwayBill(),$param,self::$token->token_type." ".self::$token->access_token);
 
         if($res['status'] == 200)

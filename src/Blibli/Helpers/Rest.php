@@ -40,16 +40,13 @@ Class Rest {
                 break;
 
             case 'PUT':
-                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");
+            case 'DELETE':
+            default:
+                curl_setopt($curl, CURLOPT_CUSTOMREQUEST, strtoupper($method));
                 if(isset($obj['raw'])){
                     curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($obj['raw']));
                 } else
                     curl_setopt($curl, CURLOPT_POSTFIELDS, self::generateFormData($obj));
-                break;
-            case 'DELETE':
-            default:
-                curl_setopt($curl, CURLOPT_CUSTOMREQUEST, strtoupper($method));
-                curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($obj));
         }
 
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);

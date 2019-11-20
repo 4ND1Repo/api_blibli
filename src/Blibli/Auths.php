@@ -18,6 +18,7 @@ class Auths extends Config {
     public static $file_token = 'token.json';
 
     public function __construct($c=null,$u=null,$p=null) {
+        parent::__construct();
         date_default_timezone_set("Asia/Jakarta");
         self::$channelId = !is_null($c)?$c:null;
         self::$username = !is_null($u)?$u:null;
@@ -44,9 +45,24 @@ class Auths extends Config {
 
             self::$token = $res['status'] == 200?$res['data']:null;
             // saving token
-            self::putFile(self::$file_token,json_encode(self::$token));
-        } else
+            if(!is_null(self::$token))
+                self::putFile(self::$file_token,json_encode(self::$token));
+        } else {
             self::$token = json_decode(self::getFile(self::$file_token));
+            if(!self::$token){
+                self::deleteFile(self::$file_token);
+                $res = Rest::post(parent::URItoken().'?channelId='.self::$channelId, [
+                    'grant_type' => 'password',
+                    'username' => self::$username,
+                    'password' => self::$password
+                ],null,['username'=>parent::$clientID,'password'=>parent::$clientPass]);
+
+                self::$token = $res['status'] == 200?$res['data']:null;
+                // saving token
+                if(!is_null(self::$token))
+                    self::putFile(self::$file_token,json_encode(self::$token));
+            }
+        }
     }
 
     public static function refreshToken(){

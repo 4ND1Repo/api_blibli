@@ -17,7 +17,7 @@ class Sas extends Auths {
         // merge with request
         $param = self::mergeBody($param);
         
-        $res = Rest::post(self::URItoken(),$param,self::$token->token_type." ".self::$token->access_token);
+        $res = Rest::post(self::URItoken(),$param);
 
         if($res['status'] == 200)
             return $res['data'];
@@ -50,6 +50,11 @@ class Sas extends Auths {
             'sessionId' => self::$uuid,
             'username' => self::$username
         ]);
+
+        // check token
+        if(!is_object(self::$token))
+            return array("error" => true, "error_message" => "Can't get Token from Blibli, please wait 5 minutes");
+
         $res = Rest::post(self::URIsasCreateOrder(),$param,self::$token->token_type." ".self::$token->access_token);
 
         if($res['status'] == 200)
@@ -77,6 +82,11 @@ class Sas extends Auths {
             'sessionId' => self::$uuid,
             'username' => self::$username
         ]);
+
+        // check token
+        if(!is_object(self::$token))
+            return array("error" => true, "error_message" => "Can't get Token from Blibli, please wait 5 minutes");
+
         $res = Rest::post(self::URIsasApprovalOrder(),$param,self::$token->token_type." ".self::$token->access_token);
 
         if($res['status'] == 200)
@@ -104,6 +114,11 @@ class Sas extends Auths {
             'sessionId' => self::$uuid,
             'username' => self::$username
         ]);
+
+        // check token
+        if(!is_object(self::$token))
+            return array("error" => true, "error_message" => "Can't get Token from Blibli, please wait 5 minutes");
+
         $res = Rest::post(self::URIsasApprovalOrderByCode(),$param,self::$token->token_type." ".self::$token->access_token);
 
         if($res['status'] == 200)
@@ -132,6 +147,11 @@ class Sas extends Auths {
             'sessionId' => self::$uuid,
             'username' => self::$username
         ]);
+
+        // check token
+        if(!is_object(self::$token))
+            return array("error" => true, "error_message" => "Can't get Token from Blibli, please wait 5 minutes");
+
         $res = Rest::post(self::URIsasApprovalOrderByName(),$param,self::$token->token_type." ".self::$token->access_token);
 
         if($res['status'] == 200)

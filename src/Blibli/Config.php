@@ -66,9 +66,13 @@ class Config {
     public static $password;
     public static $clientID;
     public static $clientPass;
-    public static $appPath = __DIR__."/../../../../../storage/app/";
+    public static $appPath;
 
     public static $bodyParam = [];
+
+    public function __construct(){
+        self::$appPath = dirname(dirname(dirname(dirname(dirname(__DIR__)))))."/storage/app/";
+    }
 
     public static function domain($uri=null){
         // set default domain
@@ -138,7 +142,7 @@ class Config {
     }
 
     public static function deleteFile($f=null){
-        if(!is_null($f) && !is_null($cont)){
+        if(!is_null($f)){
             if(file_exists(self::$appPath.$f))
                 unlink(self::$appPath.$f);
             return true;
