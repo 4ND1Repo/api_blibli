@@ -74,6 +74,7 @@ class Auths extends Config {
 
         if($res['status'] == 200){
             self::$token = $res['data'];
+            self::deleteFile(self::$file_token);
             self::putFile(self::$file_token,json_encode(self::$token));
         } else if($res['status'] == 400) {
             if($res['data']->error == 'invalid_grant'){
