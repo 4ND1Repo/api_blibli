@@ -35,7 +35,12 @@ class Auths extends Config {
             self::getToken();
     }
 
+    public static function except($e=null){
+        echo json_encode(array("error" => true, "error_message" => $e)); die;
+    }
+
     public static function getToken() {
+        $codeLimit = array(429);
         if(!self::existFile(self::$file_token)){
             $res = Rest::post(parent::URItoken().'?channelId='.self::$channelId, [
                 'grant_type' => 'password',
@@ -43,7 +48,7 @@ class Auths extends Config {
                 'password' => self::$password
             ],null,['username'=>parent::$clientID,'password'=>parent::$clientPass]);
 
-            self::$token = $res['status'] == 200?$res['data']:null;
+            self::$token = $res['status'] == 200?$res['data']:(in_array($res['status'],$codeLimit)?self::except($res['data']->errorMessage):null);
             // saving token
             if(!is_null(self::$token))
                 self::putFile(self::$file_token,json_encode(self::$token));
@@ -57,7 +62,7 @@ class Auths extends Config {
                     'password' => self::$password
                 ],null,['username'=>parent::$clientID,'password'=>parent::$clientPass]);
 
-                self::$token = $res['status'] == 200?$res['data']:null;
+                self::$token = $res['status'] == 200?$res['data']:(in_array($res['status'],$codeLimit)?self::except($res['data']->errorMessage):null);
                 // saving token
                 if(!is_null(self::$token))
                     self::putFile(self::$file_token,json_encode(self::$token));
@@ -66,6 +71,9 @@ class Auths extends Config {
     }
 
     public static function refreshToken(){
+        if(!self::existFile(self::$file_token))
+            self::getToken();
+
         $res = Rest::post(parent::URItoken().'?channelId='.self::$channelId, [
             'grant_type' => 'password',
             'client_id' => self::$clientID,
